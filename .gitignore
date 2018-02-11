@@ -1,0 +1,12 @@
+.DS_STORE
+.env
+.idea
+.myenv
+.myvenv/
+.integrafundaj
+*.sqlite3
+*pyc
+__pycache__
+staticfiles
+.ipynb_checkpoints/
+media
