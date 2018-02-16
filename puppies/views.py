@@ -14,13 +14,15 @@ def get_delete_update_puppy(request, pk):
 
     # get details of a single puppy
     if request.method == 'GET':
-        return Response({})
+        serializer = PuppySerializer(puppy)
+        return Response(serializer.data)
     # delete a single puppy
     elif request.method == 'DELETE':
         return Response({})
     # update details of a single puppy
     elif request.method == 'PUT':
         return Response({})
+
 
 @api_view(['GET', 'POST'])
 def get_post_puppies(request):
@@ -31,4 +33,14 @@ def get_post_puppies(request):
         return Response(serializer.data)
     # insert a new record for a puppy
     if request.method == 'POST':
-        return Response({})
+        data = {
+            'name': request.data.get('name'),
+            'age': int(request.data.get('age')),
+            'breed': request.data.get('breed'),
+            'color': request.data.get('color')
+        }
+        serializer = PuppySerializer(data=data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
